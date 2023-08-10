@@ -7,10 +7,9 @@ import { useRouter } from 'next/navigation';
 import FormField from './FormField';
 import Button from './Button';
 import CustomMenu from './CustomMenu';
-// import { categoryFilters } from '@/constant';
+import { categoryFilters } from '@/constant';
 import { updateProject, createNewProject, fetchToken } from '@/lib/actions';
 import { FormState, ProjectInterface, SessionInterface } from '@/common.types';
-import { categoryFilters } from '@/constants';
 
 type Props = {
     type: string,
@@ -112,7 +111,6 @@ const ProjectForm = ({ type, session, project }: Props) => {
             </div>
 
             <FormField
-            type="text"
                 title="Title"
                 state={form.title}
                 placeholder="Flexibble"
@@ -120,7 +118,6 @@ const ProjectForm = ({ type, session, project }: Props) => {
             />
 
             <FormField
-            type="text"
                 title='Description'
                 state={form.description}
                 placeholder="Showcase and discover remarkable developer projects."
