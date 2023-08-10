@@ -7,8 +7,7 @@ import { getProjectDetails } from "@/lib/actions";
 import { ProjectInterface } from "@/common.types";
 
 const EditProject = async ({ params: { id } }: { params: { id: string } }) => {
-  try {
-    const session = await getCurrentUser();
+  const session = await getCurrentUser();
 
   if (!session?.user) redirect("/")
 
@@ -25,11 +24,6 @@ const EditProject = async ({ params: { id } }: { params: { id: string } }) => {
       <ProjectForm type="edit" session={session} project={result?.project} />
     </Modal>
   );
-  } catch (error) {
-    console.log(error)
-  }
-  
-  
 };
 
 export default EditProject;

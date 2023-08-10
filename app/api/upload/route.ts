@@ -8,7 +8,6 @@ cloudinary.config({
 });
 
 export async function POST(request: Request) {
-try {
   const { path } = await request.json();
 
   if (!path) {
@@ -29,9 +28,4 @@ try {
   } catch (error) {
     return NextResponse.json({ message: "Failed to upload image on Cloudinary" }, { status: 500 });
   }
-} catch (error) {
-  console.log(error)
-}
-
-  
 }
