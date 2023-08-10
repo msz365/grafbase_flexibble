@@ -48,22 +48,27 @@ export const fetchAllProjects = (category?: string | null, endcursor?: string | 
 };
 
 export const createNewProject = async (form: ProjectForm, creatorId: string, token: string) => {
-  const imageUrl = await uploadImage(form.image);
-
-  if (imageUrl.url) {
-    client.setHeader("Authorization", `Bearer ${token}`);
-
-    const variables = {
-      input: { 
-        ...form, 
-        image: imageUrl.url, 
-        createdBy: { 
-          link: creatorId 
+  try {
+    
+    const imageUrl = await uploadImage(form.image);
+  
+    if (imageUrl.url) {
+      client.setHeader("Authorization", `Bearer ${token}`);
+  
+      const variables = {
+        input: { 
+          ...form, 
+          image: imageUrl.url, 
+          createdBy: { 
+            link: creatorId 
+          }
         }
-      }
-    };
-
-    return makeGraphQLRequest(createProjectMutation, variables);
+      };
+  
+      return makeGraphQLRequest(createProjectMutation, variables);
+    }
+  } catch (error) {
+    console.log(error)
   }
 };
 
@@ -78,11 +83,16 @@ export const updateProject = async (form: ProjectForm, projectId: string, token:
   const isUploadingNewImage = isBase64DataURL(form.image);
 
   if (isUploadingNewImage) {
-    const imageUrl = await uploadImage(form.image);
-
-    if (imageUrl.url) {
-      updatedForm = { ...updatedForm, image: imageUrl.url };
+    try {
+      
+      const imageUrl = await uploadImage(form.image);
+      if (imageUrl.url) {
+        updatedForm = { ...updatedForm, image: imageUrl.url };
+      }
+    } catch (error) {
+      
     }
+
   }
 
   client.setHeader("Authorization", `Bearer ${token}`);
